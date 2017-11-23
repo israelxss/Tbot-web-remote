@@ -1,0 +1,624 @@
+<!doctype html>
+<html>
+<meta charset="utf-8" />
+<script src="js/jquery-1.12.4.min.js"></script>
+<meta http- equiv="content-type" content=" text/ html; charset = windows -1255"/>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="res/style.css">
+        <script src="res/notify.js"></script>
+        <script src="res/notification.js"></script>
+
+        <!--Style---------------------------------------------------------------------------------------------------------->
+        <style>
+            .loader {
+                position: absolute;
+                top: calc(50% - 32px);
+                left: calc(50% - 32px);
+                width: 64px;
+                height: 64px;
+                border-radius: 50%;
+                perspective: 800px;
+            }
+            .inner {
+                position: absolute;
+                box-sizing: border-box;
+                width: 100%;
+                height: 100%;
+                border-radius: 50%;
+            }
+            .inner.one {
+                left: 0%;
+                top: 0%;
+                animation: rotate-one 1s linear infinite;
+                border-bottom: 3px solid #EFEFFA;
+            }
+            .inner.two {
+                right: 0%;
+                top: 0%;
+                animation: rotate-two 1s linear infinite;
+                border-right: 3px solid #EFEFFA;
+            }
+            .inner.three {
+                right: 0%;
+                bottom: 0%;
+                animation: rotate-three 1s linear infinite;
+                border-top: 3px solid #EFEFFA;
+            }
+            @keyframes rotate-one {
+                0% {
+                    transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+                }
+                100% {
+                    transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+                }
+            }
+            @keyframes rotate-two {
+                0% {
+                    transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+                }
+                100% {
+                    transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+                }
+            }
+            @keyframes rotate-three {
+                0% {
+                    transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+                }
+                100% {
+                    transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+                }
+            }
+            .restartA {
+                right: 0px;
+                width: 11%;
+                height: 50px;
+                position: fixed;
+                padding: 10px 20px;
+                font-size: 16px;
+                background-color: transparent;
+                color: white;
+                bottom: 0px;
+                border: 1px solid white;
+                box-shadow: 0px 0px 2px 0px white, inset 0px 0px 2px 0px white;
+                text-shadow: 0px 0px 10px white;
+                opacity: 1;
+                cursor: pointer;
+            }
+            .restartA:hover {
+                background-color: white;
+                color: #2e71b4;
+                text-shadow: 0px 0px 10px #2e71b4;
+                transition-duration: 0.5s;
+                transition-property: background-color, color, text-shadow;
+            }
+            .restartC {
+                left: 0px;
+                width: 11%;
+                height: 50px;
+                position: fixed;
+                padding: 10px 20px;
+                font-size: 16px;
+                background-color: transparent;
+                color: white;
+                border: 1px solid white;
+                bottom: 0px;
+                box-shadow: 0px 0px 2px 0px white, inset 0px 0px 2px 0px white;
+                text-shadow: 0px 0px 10px white;
+                opacity: 1;
+                cursor: pointer;
+            }
+            .restartC:hover {
+                background-color: white;
+                color: #2e71b4;
+                text-shadow: 0px 0px 10px #2e71b4;
+                transition-duration: 0.5s;
+                transition-property: background-color, color, text-shadow;
+            }
+            input#file {
+                display: none;
+            }
+            #document {
+                visibility: hidden;
+            }
+            .topper {
+                position: fixed;
+                right: 35%;
+                top: 0px;
+                width: 30%;
+                height: 50px;
+                background-color: black;
+                z-index: 50;
+                display: -webkit-box;
+                /* OLD - iOS 6-, Safari 3.1-6, BB7 */
+                
+                display: -ms-flexbox;
+                /* TWEENER - IE 10 */
+                
+                display: -webkit-flex;
+                /* NEW - Safari 6.1+. iOS 7.1+, BB10 */
+                
+                display: flex;
+                /* NEW, Spec - Firefox, Chrome, Opera */
+                
+                justify-content: center;
+                align-items: center;
+            }
+            .indicator {
+                border-radius: 50%;
+                border-style: groove;
+                background-color: red;
+                position: fixed;
+                top: 17.5px;
+                right: 37%;
+                width: 15px;
+                height: 15px;
+                z-index: 51;
+                -webkit-transition: background-color 2s;
+                -moz-transition: background-color 2s;
+                -o-transition: background-color 2s;
+                -ms-transition: background-color 2s;
+                transition: background-color 2s;
+            }
+            .icon {
+                position: fixed;
+                top: 12px;
+                left: 10px;
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+            }
+            .notcon {
+                position: fixed;
+                top: 12px;
+                left: 70px;
+                width: 30px;
+                height: 30px;
+            }
+            .chatC {
+                display:table-cell;
+                width: 15px;
+                height: 15px;
+                background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAMAAABiM0N1AAAAXVBMVEVHcEznYna1wMjM1t3M1tzqWW7qWW/L09rde4zM1t2ZqrX/zE1mdX/ZnoLqWW74ylS6xs7Qwsqpt8GKiXRufIaDkZstMzbXz72wsZ/oZHjosGzImoaYhHyJb2NSWmDqhEzaAAAACnRSTlMAt+T/K+g3kXDOfQgp4gAAAe9JREFUWMPt2NFygyAQBVAzaKwoFQ2orUn//zNrYkSQjbtgXjrTfY05ubuAkyFJHpXmBQuqIk8ToHIWXs0py05n1ylinK/Pe30czjM7jpTGOAaypIhAjRVplcIn1PAWksIdyUEpoi9YCnQkl750joBaDkinmNYgKQuF+hqWQqG+LmHJaW36AKmhLsuybnwpc4ZNc8ral2aHDM0OlOnsbkhJdLxMYUekN842kzm04Y6TKU9CINexM1kvthjHZLJftfiwB89ZMjmvbHT5QWfKJJlOQiDYuVO6AiEZ6lwqGKLO2XICoH2HDiEOGcIc6rAHzKloy487NIjgkFqjOIow7J7iSByiOJoxHBLfFAeHegFLlsPZK8gethCgtDpKspeQvWIClFZHzw4KjQKSLGf5DtaaEIDk50GH3QtAMo5q1ycRaBS+tDqSkSEhPMk42nlyH+qFJ71wkGGPYiutzvzE/rC9NTPS4ii9PEKChi00Lo75qZbU2uXm9DZe3bbw1pbquu7qMxWHDvcepCeoG5+KqoBdSIR+7tBNjJay2YVEqHtA63sH2D20fTQl+qnc4iwIeq6I2iiaS3YIUkpr3sr9/yp7rWk1ERhAPP30+of+PFTEO8XhW6hn5Q6UxkNp8p5I+faKrXjHhOIz5dC13/Hrw1+MmXkkAfe/LQAAAABJRU5ErkJggg==');
+                background-size: contain;
+                cursor: pointer;
+            }
+            .chatG {
+                display:table-cell;
+                width: 15px;
+                height: 15px;
+                background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAMAAABiM0N1AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAzUExURUdwTAAAALySZ83NzQAAAAAAAPLy8gAAAAAAAAAAADU0NL6WbHZ2dj4+Pr2UarmvpqeCW5q8yUwAAAAKdFJOUwD///8Yj//HZe3edXhTAAABEUlEQVRYw+2Y6w6DIAxGBZygHeD7P+2sjgXGRRzqXMb5YxRyrF8Tk9I0lWIE7wnpuSjVTJaFvkh1Ixa3nTybTHMgb0jNmJbe41RsLSc+kwbRgSXeRkQJT8QU+a7AVsleyMCyiBY0jNRGzbUAzHU5K3QcoiVhzsajFigKgCrAqzIPnyZMPCjCWs37mAVQCva92YP7kyKYYI4JtHsLkCOCboIlwPUq6rp7gu+I1qiiK4oGhwKRdKhhn9g1v4Pni2rXSsJe4j5fVLv2ediFf0j/X1nDPqBr1xH9Vtg4nuwk0nQfkab7iHTuUJPL8SJ78MtgjIoCo2jKEx9FQ8PxCiJ/XE/CtxwgpDztpiONCOUnQf/HA5xQN1dLMoXKAAAAAElFTkSuQmCC');
+                background-size: contain;
+                background-repeat: no-repeat;
+                cursor: pointer;
+            }
+            .chatD {
+                display:table-cell;
+                width: 15px;
+                height: 15px;
+                background-image: url('res/img_down.svg.png');
+                background-size: contain;
+                background-repeat: no-repeat;
+                cursor: pointer;
+            }
+            .toolbox{
+                direction: rtl;
+                display:table;
+                width:100%;
+            }
+            .row{
+                display:table-row;
+            }
+            #downer{
+                position:fixed;
+                right: 3%;
+                bottom: 8%;
+                background-color: white;
+                background-image: url(res/bottom.png);
+                background-repeat: no-repeat;
+                background-size: cover;
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                cursor: pointer;
+                z-index: 500;
+                -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+                -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+                box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+            }
+        </style>
+        <script>
+            document.onscroll = function(){
+            if (window.innerHeight + window.scrollY > document.body.clientHeight) {
+            document.getElementById('downer').style.display='none';
+            }
+            else{
+                document.getElementById('downer').style.display = "block";
+            }
+            }
+            function toBottom(){
+            $("html, body").animate({ scrollTop: document.body.scrollHeight }, "slow");
+            
+            }
+            function offline_not(){
+                $.notify("Your Offline!","error");
+                document.getElementById("indicator").style.backgroundColor = "red";
+            }
+            function online_not(){
+                $.notify("Your Back Online!!","success");
+                document.getElementById("indicator").style.backgroundColor = "green";
+            }
+            var token = localStorage.getItem("token");
+            function getfile(linker){
+                
+            var get_file_rq = "https://api.telegram.org/bot"+token+"/getfile?file_id="+linker;
+            var addr; 
+                 
+            $.get(get_file_rq, function(data){
+                
+            document.getElementById('hiddenframe').src = "https://api.telegram.org/file/bot"+token+"/"+data.result.file_path;
+
+                  })}
+            function get_img(linker,img_id,img_hi,img_wi){
+            
+            if (sessionStorage.getItem(img_id)==undefined){
+            var get_file_rq = "https://api.telegram.org/bot"+token+"/getfile?file_id="+linker;
+            var addr;                      
+            $.get(get_file_rq, function(data){
+                $("#"+img_id).append("<img src='https://api.telegram.org/file/bot"+token+"/"+data.result.file_path+"' style='width:"+img_wi+"px;height:"+img_hi+"px;'>");sessionStorage.setItem(img_id, data.result.file_path);
+                  })}
+            else{
+                $("#"+img_id).append("<img src='https://api.telegram.org/file/bot"+token+"/"+sessionStorage.getItem(img_id)+"' style='width:"+img_wi+"px;height:"+img_hi+"px;'>")
+            }
+            }
+            function response(user_id,title) {document.getElementById('user_id').value = user_id;$.notify("Chat ID Set To: "+title,"info");document.getElementById('user_id2').value = user_id;}
+            
+            function copyToClipboard(element) {
+                var $temp = $("<input>");
+                $("body").append($temp);
+                $temp.val($(element).text()).select();
+                document.execCommand("copy");
+                $temp.remove();
+                $.notify("Copied!!","info");
+            }
+            window.onload = function(){
+                if (localStorage.getItem("token") == undefined){
+                    window.location = "index.html"
+                }
+                document.msgC.action = "https://api.telegram.org/bot"+token+"/sendmessage";
+                document.cunfirm.action = "https://api.telegram.org/bot"+token+"/senddocument";
+            };
+            window.onunload = function(){
+                localStorage.removeItem("token");
+            }
+        </script>
+    </head>
+
+    <body dir="ltr" onoffline="offline_not();" ononline="online_not();">
+        <div class="menu" id="menu">
+            <div></div>
+            <div id="notcon" name="notcon" onclick="javascript:mutedQ();"></div>
+            <a href="https://t.me/the_9h03n1x" target="_blank"><img src="res/phoenix.jpg" id="icon" class="icon">
+            </a>
+            <a href="https://t.me/israeli1" target="_blank"><img src="res/israeli1.jpg" id="icon" class="icon" style="left:50px;">
+            </a>
+            <div class="indicator" id="indicator"></div>
+            <div class="topper" id="topper">
+            <div id="demo" class="name"></div>
+            </div>
+            <div id="userinf" class="last"></div>
+        </div>
+        <!--Loader-------------------------------------------------------------------------------------------------------------------------------->
+
+        <div class="loader" id="loader">
+            <div class="inner one"></div>
+            <div class="inner two"></div>
+            <div class="inner three"></div>
+        </div>
+
+        <!--Chat View----------------------------------------------------------------------------------------------------------------------------->
+        <ol class="chat">
+            <div class="other" id="Mcontent"></div>
+        </ol>
+        <!--Inputs-------------------------------------------------------------------------------------------------------------------------------->
+        <!--send-Msg------------------------------------------------------------------------------------------------------------------------------>
+        <div class="typezone">
+            <form id="msgC" name="msgC" action="/" method="post" enctype="multipart/form-data" target="hiddenframe">
+                <textarea name="text" id="text" dir="ltr" placeholder="Please Insert Your Message Here" minlength="1"></textarea>
+                <input type="text" id="user_id" value="nothing" name="chat_id" onkeyup="typing();" style="visibility:hidden;"/>
+                <input type="submit" value="Send" id="sendT" class="restartA"/>
+            <script>
+                
+            </script>
+            </form>
+            <!--send-files------------------------------------------------------------------------------------------------------------------------------>
+
+            <div class="UPfile">
+                <form id="cunfirm" name="cunfirm" action="/" method="post" enctype="multipart/form-data" target="hiddenframe">
+                    <input name="MAX_FILE_SIZE" value="500" type="hidden"/>
+                    <input type="text" id="user_id2" name="chat_id" style="visibility:hidden;"/>
+                    <input type="file" name="document" id="document"/>
+                    <input id="choosefile" type="button" value="Upload" class="restartC" onclick="javascript:GetClick();"/>
+                </form>
+            </div>
+        </div>
+        <!--request Reciver--------------------------------------------------------------------------------------------------------------------------->
+        <iframe id="hiddenframe" name="hiddenframe" class="hide">
+        </iframe>
+        <div id="downer" onclick="toBottom();"></div>
+        <!--Clicker-------------------------------------------------------------------------------------------------------->
+        <script>
+            $("input[type='image']").click(function() {
+                $("input[id='my_file']").click();
+            });
+        </script>
+        <!--Get Bot Name--------------------------------------------------------------------------------------------------->
+        <script>
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var myObj = JSON.parse(this.responseText);
+                    document.getElementById("demo").innerHTML = myObj.result.first_name;
+                }
+            };
+            xmlhttp.open("GET", "https://api.telegram.org/bot"+token+"/getme", true);
+            xmlhttp.send();
+        </script>
+        <!--Get Bot Link--------------------------------------------------------------------------------------------------->
+<!--        <script>
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var myObj = JSON.parse(this.responseText);
+                    document.getElementById("userinf").innerHTML = "<a href='https://t.me/" + myObj.result.username+"' target='_blank'>https://t.me/" + myObj.result.username+"</a>";
+                }
+                if (this.status == 400) {
+                    $.notify("Error!", "warn");
+                }
+            };
+            xmlhttp.open("GET", "https://api.telegram.org/bot"+token+"/getMe", true);
+            xmlhttp.send();
+
+            var mutedQ = 1;
+            var msgcount = 0;
+        </script> -->
+
+        <!--Get Chat Content----------------------------------------------------------------------------------------------->
+        <script>
+            var img_addr;
+            var chat_type;
+            var check = [];
+            var ret;
+            var text;
+            var check = 1;
+            var usr_id;
+            result = {};
+            
+            function sendText() {
+                
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'https://api.telegram.org/bot'+token+'/getUpdates', true);
+                xhr.onload = function(e) {
+                    var y = document.getElementById('Mcontent');
+                    y.innerHTML = "";
+
+                    if (this.status == 200) {
+                        var msg = this.responseText;
+                        var jsonData = JSON.parse(msg);
+                        var result = jsonData.result;
+                        
+
+                        var rLen = result.length - 1;
+                        var certo = rLen + 1;
+
+                        if (certo == 0) {
+                            document.title = "didn't Got Any Message Yet";
+                        } 
+                        else {    
+                            document.title = "(" + certo + ")" + " הודעות";
+                        }
+                        if (rLen > -1) {
+                            for (i = 0; i != -1; i++) {
+                                if ('channel_post' in result[i]){
+                                var text = result[i].channel_post.text;
+                                var data = result[i].channel_post.date;
+                                var message_id = result[i].channel_post.message_id;
+
+                                if (text == undefined){
+                                        text = "";
+                                    }
+                                if (text.includes("<")){
+                                    text = text.replace(/<s/g,'');
+                                    text = text.replace(/<S/g,'');
+                                    text = text.replace(/<if/g,'');
+                                    text = text.replace(/<If/g,'');
+                                    text = text.replace(/<iF/g,'');
+                                    text = text.replace(/<IF/g,'');
+                                    text = text.replace(/\n/g,'<br>');
+                                    console.log("XSS Prevented!");
+                                }
+                                
+                                
+                                
+                                if ('document' in result[i].channel_post){
+                                
+                                var file_title = result[i].channel_post.document.file_name;
+                                    
+                                var file_id = result[i].channel_post.document.file_id;
+                                    
+                                if (result[i].message.channel_post.type == "channel"){
+                                        chat_type = " <font style='color:blue;'><font style='color:green'>"+result[i].message.channel_post.title+"</font>[channel]</font>";
+                                    }
+                                    else {
+                                        chat_type = " in <font style='color:red'>"+result[i].message.channel_post.title+"</font>";
+                                    }
+                                
+                                $("#Mcontent").append("<li><div class='msg' id='msg_id"+message_id+"'><font style='color:green' dir='ltr'>"+result[i].message.from.first_name+" in "+result[i].message.chat.title+"</font><p><a onclick='javascript:getfile("+file_id+");'><font color='purple'><img src='res/down.png'></img>" + file_title + "</font></a></p><time><font color='blue'>" + converterData(data) + "</font><time><br><div id='toolbox'><div id='row'><div id='chatC' class='chatC' title='Reply' onclick='response(\""+usr_id+"\");'></div><div style='display:table-cell;padding:6%;'></div><div id='chatG' class='chatG' title='Copy' onclick='copyToClipboard(\"#msg_"+message_id+"\");'></div></div></div></li></ol></div></li>");    
+                                document.getElementById('loader').style.visibility = "hidden";
+                                document.getElementById("indicator").style.backgroundColor = "green";
+                                file_title = null;
+
+                            }
+                                else if ('photo' in result[i].channel_post){
+                                 
+                                var file_id = result[i].channel_post.photo[3].file_id;
+                                    
+                                var img_hi = result[i].channel_post.photo[2].height;
+                                    
+                                var img_wi = result[i].channel_post.photo[2].width;
+
+                                var get_file_rq = "https://api.telegram.org/bot"+token+"/getfile?file_id="+file_id;
+                                
+                                var msg_id = "msg_id"+message_id;
+                                chat_type = "<font style='color:green;'>"+result[i].channel_post.chat.title+"<font style='color:blue;'> [channel]</font></font>";
+                                    
+                                $("#Mcontent").append("<li><script>document.getElementById('msg_id"+message_id+"').onload = get_img('"+file_id+"','msg_id"+message_id+"',"+img_hi+","+img_wi+")<\/script><div class='msg'><font style='color:green' dir='ltr'>"+chat_type+"</font><a id='msg_id"+message_id+"'></a><time><font color='blue'>" + converterData(data) + "</font><time><br><div id='toolbox'><div id='row'><div id='chatC' class='chatC' title='Reply' onclick='response(\""+result[i].channel_post.chat.id+"\" , \""+result[i].channel_post.chat.title+"\");'></div><div style='display:table-cell;padding:6%;'></div><div id='chatG' class='chatG' title='Copy' onclick='copyToClipboard(\"#msg_"+message_id+"\");'></div></div></div></li></ol></div></li>");    
+                                document.getElementById('loader').style.visibility = "hidden";
+                                document.getElementById("indicator").style.backgroundColor = "green";
+                                }
+
+                                else {
+                                chat_type = "<font style='color:green;'>"+result[i].channel_post.chat.title+"<font style='color:blue;'> [channel]</font></font>";
+                                    
+                                $("#Mcontent").append("<li><div class='msg other' id='msg"+message_id+"'><font style='color:green' dir='ltr'>"+chat_type+"</font><p id='msg_"+message_id+"'>" + text + "</p><time><font color='blue'>" + converterData(data) + "</font><time><br><div id='toolbox'><div id='row'><div id='chatC' class='chatC' title='Reply' onclick='response(\""+result[i].channel_post.chat.id+"\" , \""+result[i].channel_post.chat.title+"\");'></div><div style='display:table-cell;padding:6%;'></div><div id='chatG' class='chatG' title='Copy' onclick='copyToClipboard(\"#msg_"+message_id+"\");'></div></div></div></li></ol></div></li>");
+                                document.getElementById('loader').style.visibility = "hidden";
+                                document.getElementById("indicator").style.backgroundColor = "green";
+                                }
+                                }
+                                else if('message' in result[i]){
+                                    
+                                var text = result[i].message.text;
+                                var data = result[i].message.date;
+                                var usr_id = result[i].message.from.id;
+                                var message_id = result[i].message.message_id;
+                                    if (text == undefined){
+                                        text = "";
+                                    }
+                                if (text.includes("<")){
+                                    text = text.replace(/<s/g,'');
+                                    text = text.replace(/<S/g,'');
+                                    text = text.replace(/<if/g,'');
+                                    text = text.replace(/<If/g,'');
+                                    text = text.replace(/<iF/g,'');
+                                    text = text.replace(/<IF/g,'');
+                                    text = text.replace(/\n/g,'<br>');
+                                    text = "<font style='color:red;'"+text+"</font>";
+                                    console.log("XSS Prevented!");
+                                }
+                                    
+                                if ('document' in result[i].message){
+                                var file_title = result[i].message.document.file_name;
+                                    
+                                var file_id = "\""+result[i].message.document.file_id+"\"";
+                                    
+                                $("#Mcontent").append("<li><div class='msg other'><font style='color:green' dir='ltr'>"+result[i].message.from.first_name+"</font><p><a onclick='javascript:getfile("+file_id+");' style='cursor:pointer;'><img src='res/down.png' style='width:128px;height:128px;right:calc(50% - 64px)'></img><font color='purple'>" + file_title + "</font></a></p><time><font color='blue'>" + converterData(data) + "</font><time><br><div id='chatC' class='chatC' onclick='response(\""+usr_id+"\");'></div></li></ol></div></li>");    
+                                document.getElementById('loader').style.visibility = "hidden";
+                                document.getElementById("indicator").style.backgroundColor = "green";
+
+                                    }
+                                else if ('photo' in result[i].message){
+                                 
+                                var file_id = result[i].message.photo[2].file_id;
+                                    
+                                var img_hi = result[i].message.photo[2].height;
+                                    
+                                var img_wi = result[i].message.photo[2].width;
+                                    
+                                    if (result[i].message.chat.type == "private"){
+                                        chat_type = " <font style='color:blue;'>[private Message]</font>";
+                                    }
+                                    else {
+                                        chat_type = " in <font style='color:red'>"+result[i].message.chat.title+"</font>";
+                                    }
+                                if ('forward_from' in result[i].message){
+                                $("#Mcontent").append("<li><script>document.getElementById('msg_id"+message_id+"').onload = get_img('"+file_id+"','msg_id"+message_id+"',"+img_hi+","+img_wi+")<\/script><div class='msg'><font style='color:green' dir='ltr'>"+result[i].message.from.first_name+chat_type+" Forwarded from <font style='color:blue' dir='ltr'>"+result[i].message.forward_from.first_name+"</font></font><a id='msg_id"+message_id+"'></a><time><font color='blue'>" + converterData(data) + "</font><time><br><div id='toolbox'><div id='row'><div id='chatC' class='chatC' title='Reply' onclick='response(\""+usr_id+"\" , \" @"+result[i].message.chat.username+"\");'></div><div style='display:table-cell;padding:6%;'></div></div></div></li></ol></div></li>");
+                                }
+                                else {
+                                    $("#Mcontent").append("<li><script>document.getElementById('msg_id"+message_id+"').onload = get_img('"+file_id+"','msg_id"+message_id+"',"+img_hi+","+img_wi+")<\/script><div class='msg'><font style='color:green' dir='ltr'>"+result[i].message.from.first_name+chat_type+"</font><a id='msg_id"+message_id+"'></a><p id='msg_"+message_id+"'>" + text + "</p><time><font color='blue'>" + converterData(data) + "</font><time><br><div id='toolbox'><div id='row'><div id='chatC' class='chatC' title='Reply' onclick='response(\""+usr_id+"\" , \" @"+result[i].message.chat.username+"\");'></div><div style='display:table-cell;padding:6%;'></div><div id='chatG' class='chatG' title='Copy' onclick='copyToClipboard(\"#msg_"+message_id+"\");'></div></div></div></li></ol></div></li>");
+                                }
+                                document.getElementById('loader').style.visibility = "hidden";
+                                document.getElementById("indicator").style.backgroundColor = "green";
+                                }
+                                    
+                                else {
+                                    
+                                    if (result[i].message.chat.type == "private"){
+                                        chat_type = " <font style='color:blue;'>[private Message]</font>";
+                                    }
+                                    else {
+                                        chat_type = " in <font style='color:red'>"+result[i].message.chat.title+"</font>";
+                                    }
+                                $("#Mcontent").append("<li><div class='msg other'><font style='color:green' dir='ltr'>"+result[i].message.from.first_name+chat_type+"</font><p id='msg_"+message_id+"'>" + text + "</p><time><font color='blue'>" + converterData(data) + "</font><br><div id='toolbox'><div id='row'><div id='chatC' class='chatC' title='Reply' onclick='response(\""+usr_id+"\" , \" @"+result[i].message.chat.username+"\");'></div><div style='display:table-cell;padding:6%;'></div><div id='chatG' class='chatG' title='Copy' onclick='copyToClipboard(\"#msg_"+message_id+"\");'></div></div></div></li></ol></div></li>");
+                                document.getElementById('loader').style.visibility = "hidden";
+                                document.getElementById("indicator").style.backgroundColor = "green";
+                                }
+                                }
+                                }
+
+                                if (msgcount < i) {
+                                    msgcount = i;
+                                    $.notify("new message!", "info");
+                                    var audio = new Audio('res/notification.mp3');
+                                    audio.play();
+                                    if (Notification.permission !== 'granted') {
+                                        Notification.requestPermission();
+                                    }
+                                    n = new Notification("You Got Message From The Students Archive!",{
+                                        body: "" + text + "",
+                                        icon: "res/msg.png"
+                                    });
+                                }
+
+                        }
+                        
+                    }
+                }
+                    xhr.send();
+            }
+
+            function converterData(UNIX_timestamp) {
+                var a = new Date(UNIX_timestamp * 1000);
+                var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                var month = months[a.getMonth()];
+                var date = a.getDate();
+                var hour = a.getHours();
+
+
+                var min = +a.getMinutes();
+                var time = date + ' ' + month + ' ' + hour + ':' + min;
+                return time;
+            }
+
+            setInterval(sendText, 3000);
+
+            function GetClick() {
+                document.getElementById('document').click();
+                $('#document').change(function() {
+                    $('#cunfirm').submit();
+                    $.notify("sending file...", "info");
+                });
+                $.notify("Please Choose File", "info");
+            }
+        </script>
+        <!--notifications------------------------------------------------------------------------------------------------------------------------->
+        <script>
+            function enableNUT() {
+                var chck = Notification.permission;
+                if (chck === 'granted') {
+                    alert("already enabled!")
+                } else if (chck === 'denied') {
+                    Notification.requestPermission(function(permission) {
+                        alert(permission);
+                    });
+                } else if (chck === 'unknown') {
+                    alert("Browser does not support it")
+                }
+            }
+        </script>
+
+    </body>
+
+</html>

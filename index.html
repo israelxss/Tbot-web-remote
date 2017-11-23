@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+    <meta charset="utf-8" />
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <meta http- equiv="content-type" content=" text/ html; charset = windows -1255"/>
+        
+        <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="res/login.css">            
+        <script>
+            function setToken(token){
+                document.getElementById('button').style.color = "green";
+                document.getElementById('button').value = "Checking...";
+                $.ajax({
+                url: "https://api.telegram.org/bot"+token+"/getMe",
+                type: 'GET',
+                success: function() {
+                localStorage.setItem("token",token);
+                window.location.replace("chat.html");
+                },
+                error: function() {
+                document.getElementById('button').style.color = "black";
+                document.getElementById('button').value = "Ok";
+                alert("you must Enter Valid Token!");
+                document.getElementById('botoken').style.borderColor="palevioletred";
+                }
+                });
+            }
+            window.onload = function(){
+                if (localStorage.getItem("token") != undefined)
+                    {
+                        document.getElementById("botoken").value = localStorage.getItem("token");
+                    }
+            }
+        </script>
+        </head>
+        <body>
+            <div class="login">
+                <input type="text" id="botoken" placeholder="Bot Token">
+                <input type="button" id="button" value="Ok" onclick="setToken(document.getElementById('botoken').value);">
+            </div>
+            
+        </body>
+</html>
+
+<!-- 450111646:AAFumy0-2jSDJtWaZPeWeCPmNySunCcqOW0 -->
