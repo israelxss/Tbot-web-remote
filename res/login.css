@@ -1,0 +1,45 @@
+html, article, body {
+  background-image: url(bg.jpg);
+  background-size: cover;
+    font-family: 'Lato', sans-serif;
+    margin: 0px auto;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+.login{
+    
+    position: fixed;
+    margin: auto;
+    background-color: white;
+    width: 30%;
+    height: 50%;
+    right: 35%;
+    top: 25%;
+    border-radius: 15px;
+    -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+#botoken{
+    width: 20%;
+    position: fixed;
+    border-radius: 7px;
+    right: 40%;
+    top: 50%;
+}
+#button{
+    position: fixed;
+    width: 10%;
+    height: 5%;
+    right: 45%;
+    top: 60%;
+    border-radius: 5px;
+    
+}
+#button:hover{
+    background-color: cornflowerblue;
+    -webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    -moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+    box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
