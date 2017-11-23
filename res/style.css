@@ -1,0 +1,388 @@
+html, article, body {
+  background-image: url(bg.jpg);
+  background-size: cover;
+    font-family: 'Lato', sans-serif;
+    margin: 0px auto;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    font-family: myFirstFont;
+}
+::selection{
+  background: rgba(82,179,217,0.3);
+  color: inherit;
+}
+/* M E N U */
+.menu {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    width: 100%;
+    height: 50px;
+    background: rgba(27,35,42,0.9);
+    z-index: 100;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+.name {
+    text-align: center;
+    vertical-align: middle;
+    position: fixed;
+    top: 3px;
+    font-family: 'Lato';
+    font-size: 25px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.98);
+    cursor: default;
+}
+.last {
+    position: fixed;
+    top: 50px;
+    right: 45%;
+    font-family: 'Lato';
+    font-size: 11px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.6);
+    cursor: default;
+    z-index: 52;
+}
+.members {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    font-family: 'Lato';
+    font-size: 11px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.6);
+    cursor: default;
+    word-spacing: 2px;
+}
+
+/* M E S S A G E S */
+.chat {
+    list-style: none;
+    background: none;
+    margin: 0;
+    padding: 0 0 50px 0;
+    margin-top: 60px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column-reverse;
+}
+.chat li {
+    padding: 0.5rem;
+    overflow: hidden;
+    display: flex;
+}
+.chat .day {
+    position: relative;
+    display: block;
+    text-align: center;
+    color: rgba(255,255,255,0.3);
+    height: 20px;
+    text-shadow: 7px 0px 0px #252C33, 6px 0px 0px #252C33, 5px 0px 0px #252C33, 4px 0px 0px #252C33, 3px 0px 0px #252C33, 2px 0px 0px #252C33, 1px 0px 0px #252C33, 1px 0px 0px #252C33, 0px 0px 0px #252C33, -1px 0px 0px #252C33, -2px 0px 0px #252C33, -3px 0px 0px #252C33, -4px 0px 0px #252C33, -5px 0px 0px #252C33, -6px 0px 0px #252C33, -7px 0px 0px #252C33;
+    box-shadow: inset 20px 0px 0px #252C33, inset -20px 0px 0px #252C33, inset 0px -2px 0px rgba(255,255,255,0.1);
+    line-height: 38px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    cursor: default;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.other .msg {
+    position: relative;
+    left: 40px;
+    border-radius: 5px;
+    box-shadow: -1px 2px 0px #c1cbcd;
+}
+
+.self {
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+.self .msg {
+    border-bottom-right-radius: 0px;
+    box-shadow: 1px 2px 0px #c1cbcd;
+}
+.self:after {
+    content: "";
+    position: relative;
+    display: inline-block;
+    float: right;
+    bottom: 0px;
+    right: 0px;
+    width: 0px;
+    height: 0px;
+    border: 5px solid #eef8ff;
+    border-right-color: transparent;
+    border-top-color: transparent;
+    box-shadow: 0px 2px 0px #c1cbcd;
+}
+
+.msg {
+    direction: rtl;
+    max-width: 1000px;
+    background: #eef8ff;
+    min-width: 50px;
+    padding: 10px;
+    border-radius: 2px;
+    word-break: break-all;
+}
+.msg .user {
+    font-size: 14px;
+    margin: 0 0 2px 0;
+    color: #666;
+    font-weight: 700;
+    margin-top: -2px;
+    margin-bottom: 5px;
+    transition: all .2s ease;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+.msg .user .range.admin {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 300;
+    color: #6aea96;
+    padding: 2px;
+    border-radius: 3px;
+    border: solid 1px #6aea96;
+    background: rgba(255,255,255,0);
+    margin-left: 5px;
+}
+.msg p {
+    font-size: 13px;
+    margin: 0 0 2px 0;
+    color: #777;
+    transition: all .2s ease;
+}
+.msg img {
+    position: relative;
+    display: block;
+    width: 600px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 3px #eee;
+    transition: all .8s cubic-bezier(0.565, -0.260, 0.255, 1.410);
+    cursor: default;
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+    pointer-events: none;
+}
+
+.msg time {
+    font-size: 0.7rem;
+    color: rgba(0,0,0,.35);
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+    cursor: default;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    border-radius: 100px;
+    border: solid 3px #252C33;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: rgba(255,255,255,0.1);
+}
+
+::-webkit-scrollbar-button {
+    display: block;
+    height: 26px;
+}
+
+/* T Y P E */
+.typezone{
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    height: 50px;
+    z-index: 99;
+    background: #efe;
+    border: none;
+    outline: none;
+    background-color:black;
+}
+textarea, textarea:hover {
+    position: fixed;
+    bottom: 0px;
+    right: 11%;
+    left: 11%;
+    width: 78%;
+    height: 60px;
+    background: #fafafa;
+    border: none;
+    outline: none;
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-top: 2%;
+    color: #666;
+    font-weight: 400;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    overflow:hidden;
+    resize: none;
+    z-index: 200;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+    transition: all .4s;
+}
+textarea:focus {
+    height: 150px;
+    box-shadow: 0px 0px 20px rgba(0,0,0,0.3);
+}
+
+.send {
+    position: fixed;
+    display: block;
+    bottom: 0px;
+    right: 0px;
+    width: 8%;
+    height: 50px;
+    border: none;
+    outline: none;
+    z-index: 100;
+    background-image: url(send1.png);
+    background-repeat: no-repeat;
+    background-size: 34px 34px;
+    background-position: 45% 9px;
+    background-color: rgba(255,255,255,0);
+}
+.send:active {
+    opacity: 0.85;
+}
+
+.UPfile:active {
+    opacity: 0.85;
+}
+
+.Ent_Token {
+        position: fixed;
+        top: 45%;
+        right: 25%;
+        width: 50%;
+        height: 10%;
+        background-color: white;
+        border-radius: 15%;
+        z-index: 1000;
+    }
+
+
+
+/* R E S P O N S I V E   C O N F I G U R A T I O N */
+
+@media screen and (max-width: 750px) {
+    ::-webkit-scrollbar {
+    display: none;
+    }
+    .chat{
+        margin-bottom: 55px;
+    }
+    .msg p {
+        font-size: 11px;
+    }
+    .msg .user {
+        font-size: 13px;
+    }
+    .msg img {
+        width: 300px;
+    }
+    .chat .notification {
+        font-size: 12px;
+        margin: 7px 30%;
+        width: 40%;
+    }
+    .chat .day {
+        font-size: 11px;
+    }
+    .send {
+        width: 25%;
+    }
+    textarea {
+        position: fixed;
+        left: 11%;
+        right: 11%;
+        width: 78%;
+        height: 60px;
+        padding-left: 5%;
+        padding-right: 5%;
+        padding-top: 20px;
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+        z-index: 200;
+        background: #fafafa;
+        box-shadow: none;
+        transition: all .4s;
+    }
+    textarea:focus {
+        height: 30vh;
+        margin-top: 30vh;
+        box-shadow: 0px -20px 20px rgba(0,0,0,0.1);
+    }
+
+    form:focus ~ .typezone {
+        bottom: 50vh;
+    }
+}
+@media screen and (max-width: 550px) {
+    .msg p {
+        max-width: 250px;
+    }
+    .msg img {
+        width: 200px;
+    }
+    .chat .notification {
+        font-size: 12px;
+        margin: 7px 0px;
+        width: 100%;
+        border-radius: 0px;
+      }
+      .chat .notification time {
+        right: 10px;
+      }
+
+      label.filebutton {
+    width:120px;
+    height:40px;
+    overflow:hidden;
+    position:relative;
+    background-color:#ccc;
+}
+
+label span input {
+    z-index: 999;
+    line-height: 0;
+    font-size: 50px;
+    position: absolute;
+    top: -2px;
+    left: -700px;
+    opacity: 0;
+    filter: alpha(opacity = 0);
+    -ms-filter: "alpha(opacity=0)";
+    cursor: pointer;
+    _cursor: hand;
+    margin: 0;
+    padding:0;
+}
+@font-face {
+    font-family: MainFont;
+    src: url("res/font.woff2");
+}
+    
