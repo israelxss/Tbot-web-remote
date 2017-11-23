@@ -13,6 +13,8 @@
 
 
 
+לקבוצת התמיכה בפרוייאקט
+https://t.me/joinchat/FugU80xcMSBEA_Ip-0_gIg
 
-לקבוצה שלי
+לקבוצת הפרוייאקטים שלי
 https://t.me/joinchat/AAAAAEJvaj4mWlEtJPVIXQ
