@@ -17,11 +17,7 @@
 <br>
 
 
-
-
-לקבוצת התמיכה בפרוייאקט
-https://t.me/joinchat/FugU80xcMSBEA_Ip-0_gIg
 <br>
 לקבוצת הפרוייאקטים שלי
-https://t.me/joinchat/AAAAAEJvaj4mWlEtJPVIXQ
+https://t.me/israeli1
 # radioil
